@@ -2,6 +2,7 @@ package main
 
 import (
 	"flag"
+    "fmt"
 
 	common "github.com/dokku/dokku/plugins/common"
 )
@@ -23,6 +24,6 @@ func main() {
 
 	common.LogInfoQuiet2(fmt.Sprintf("Image tags for %s", imageRepo))
 	dockerArgs := []string{"images", imageRepo}
-	dockerCmd := common.NewShellCmdWithArgs("docker", triggerArgs)
+	dockerCmd := common.NewShellCmdWithArgs("docker", dockerArgs)
 	dockerCmd.Execute()
 }

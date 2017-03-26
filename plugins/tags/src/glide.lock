@@ -1,0 +1,10 @@
+hash: 671036182cb4a760b27f070eea7da3ac03b1a30b5310d1b460936ad65cebc4e6
+updated: 2017-03-26T06:00:26.982781685-06:00
+imports:
+- name: github.com/codegangsta/inject
+  version: 33e0aa1cb7c019ccc3fbe049a8262a6403d30504
+- name: github.com/codeskyblue/go-sh
+  version: ceb46ec4630a726eeed51d0a70066c9e1102c48f
+- name: github.com/ryanuber/columnize
+  version: ddeb643de91b4ee0d9d87172c931a4ea3d81d49a
+testImports: []

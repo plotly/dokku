@@ -2,6 +2,7 @@ package main
 
 import (
 	"flag"
+    "fmt"
 
 	common "github.com/dokku/dokku/plugins/common"
 )
@@ -26,7 +27,7 @@ func main() {
 	}
 
 	dockerArgs := []string{"rmi", fmt.Sprintf("%s:%s", imageRepo, imageTag)}
-	dockerCmd := common.NewShellCmdWithArgs("docker", triggerArgs)
+	dockerCmd := common.NewShellCmdWithArgs("docker", dockerArgs)
 	dockerCmd.Execute()
 
 	triggerArgs := []string{"trigger", "tags-destroy", appName, imageTag}

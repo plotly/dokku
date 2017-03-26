@@ -1,2 +1,6 @@
-package: .
-import: []
+package: github.com/dokku/dokku/plugins/tags/src
+import:
+- package: github.com/codeskyblue/go-sh
+- package: github.com/ryanuber/columnize
+ignore:
+- github.com/dokku/dokku

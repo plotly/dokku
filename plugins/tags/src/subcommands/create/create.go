@@ -2,10 +2,13 @@ package main
 
 import (
 	"errors"
+    "fmt"
 	"flag"
 	"strconv"
+    "strings"
 
 	common "github.com/dokku/dokku/plugins/common"
+    sh "github.com/codeskyblue/go-sh"
 )
 
 // creates an images tag for app via command line
@@ -47,20 +50,20 @@ func main() {
 
 // "docker tag -f" was dropped in 1.12.0
 func isTagForceAvailable() (bool, error) {
-	clientVersionString = dockerVersion()
+	clientVersionString := dockerVersion()
 	if clientVersionString == "" {
-		return nil, errors.New("Unable to retrieve docker version")
+		return false, errors.New("Unable to retrieve docker version")
 	}
 
 	items := strings.Split(clientVersionString, ".")
 	majorVersion, err := strconv.Atoi(items[0])
 	if err != nil {
-		return nil, errors.New("Unable to parse docker version")
+		return false, errors.New("Unable to parse docker version")
 	}
 
 	minorVersion, err := strconv.Atoi(items[1])
 	if err != nil {
-		return nil, errors.New("Unable to parse docker version")
+		return false, errors.New("Unable to parse docker version")
 	}
 
 	if majorVersion > 1 {
@@ -74,10 +77,9 @@ func isTagForceAvailable() (bool, error) {
 }
 
 func dockerVersion() string {
-	dockerCmd := [2]string{"version", "-f=\"{{ .Client.Version }}\""}
-	dockerCmd := common.NewShellCmdWithArgs("docker", triggerArgs)
-	if dockerCmd.Execute() {
-		return dockerCmd.Command.Stdout
-	}
-	return ""
+    b, err := sh.Command("docker", "version", "-f=\"{{ .Client.Version }}\"").Output()
+    if err != nil {
+        common.LogFail(err.Error())
+    }
+    return string(b[:])
 }

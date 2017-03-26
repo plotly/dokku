@@ -32,6 +32,22 @@ func NewShellCmd(command string) *ShellCmd {
 	}
 }
 
+// NewShellCmdWithArgs returns a new ShellCmd struct
+func NewShellCmdWithArgs(cmd string, args []string) *ShellCmd {
+    var command []string
+    append(command, cmd)
+    for i := range args {
+        command = append(command, args[i])
+    }
+
+    return &ShellCmd{
+        Command:       exec.Command(cmd, args...),
+        CommandString: command,
+        Args:          args,
+        ShowOutput:    true,
+    }
+}
+
 // Execute is a lightweight wrapper around exec.Command
 func (sc *ShellCmd) Execute() bool {
 	env := os.Environ()
@@ -79,6 +95,18 @@ func MustGetEnv(key string) string {
 func LogFail(text string) {
 	fmt.Fprintln(os.Stderr, fmt.Sprintf("FAILED: %s", text))
 	os.Exit(1)
+}
+
+// LogInfoQuiet is the info header formatter
+func LogInfoQuiet(text string) {
+    fmt.Fprintln(os.Stdout, fmt.Sprintf("=====> %s", text))
+}
+
+// LogInfoQuiet2 is the info header formatter (with quiet option)
+func LogInfoQuiet2(text string) {
+    if os.Getenv("DOKKU_QUIET_OUTPUT") != "" {
+        LogInfoQuiet(text)
+    }
 }
 
 // GetDeployingAppImageName returns deploying image identifier for a given app, tag tuple. validate if tag is presented

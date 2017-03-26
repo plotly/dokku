@@ -35,14 +35,14 @@ func NewShellCmd(command string) *ShellCmd {
 // NewShellCmdWithArgs returns a new ShellCmd struct
 func NewShellCmdWithArgs(cmd string, args []string) *ShellCmd {
     var command []string
-    append(command, cmd)
+    command = append(command, cmd)
     for i := range args {
         command = append(command, args[i])
     }
 
     return &ShellCmd{
         Command:       exec.Command(cmd, args...),
-        CommandString: command,
+        CommandString: strings.Join(command, " "),
         Args:          args,
         ShowOutput:    true,
     }

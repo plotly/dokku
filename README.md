@@ -11,6 +11,12 @@
 
 Docker powered mini-Heroku. The smallest PaaS implementation you've ever seen.
 
+<div align="center">
+  <a href="https://dash.plotly.com/project-maintenance">
+    <img src="https://dash.plotly.com/assets/images/maintained-by-plotly.png" width="600px" alt="Maintained by Plotly">
+  </a>
+</div>
+
 ## Sponsors
 
 See our list of past sponsors in the [SPONSORS](https://github.com/dokku/dokku/blob/master/SPONSORS.md) file.
